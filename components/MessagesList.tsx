@@ -14,9 +14,9 @@ type Message = {
 const mockMessages: Message[] = [
   {
     id: '1',
-    name: 'Sarah',
-    lastMessage: 'Salut ! Comment vas-tu ?',
-    avatar: 'https://placekitten.com/100/100',
+    name: 'Elon Musk',
+    lastMessage: 'Hi man ! It\'s Elon !',
+    avatar: '',
     timestamp: '10:30',
   },
   {

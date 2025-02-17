@@ -20,13 +20,20 @@ const DUMMY_PROFILES = [
   },
   {
     id: 2,
-    name: 'Mark Zuckerberg',
-    age: 39,
-    location: 'Palo Alto, US',
-    image: require('../assets/images/elon-chad.jpg'), // Remplacer par l'image de Mark
-    avatar: require('../assets/images/elon.jpg'), // Remplacer par l'avatar de Mark
+    name: 'Donald Trump',
+    age: 79,
+    location: 'Washington, US',
+    image: require('../assets/images/donald-trump.jpg'),
+    avatar: require('../assets/images/donald-trump-chad.jpg'),
   },
-  // Ajouter d'autres profils...
+  {
+    id: 3,
+    name: 'Shrek Smith',
+    age: 42,
+    location: 'Far Far Away',
+    image: require('../assets/images/shrek-smith.jpg'),
+    avatar: require('../assets/images/shrek-smith.jpg'),
+  }
 ];
 
 export function SwipeCard() {
@@ -103,6 +110,24 @@ export function SwipeCard() {
 
   return (
     <ThemedView style={styles.container}>
+      {/* Next card (for the pile effect) */}
+      {currentIndex + 1 < DUMMY_PROFILES.length && (
+        <View style={[styles.card, styles.nextCard]}>
+          <Image
+            source={DUMMY_PROFILES[currentIndex + 1].image}
+            style={styles.image}
+          />
+          <ThemedView style={styles.info}>
+            <Image
+              source={DUMMY_PROFILES[currentIndex + 1].avatar}
+              style={styles.infoImage}
+            />
+            <ThemedText type="subtitle">{DUMMY_PROFILES[currentIndex + 1].name}, {DUMMY_PROFILES[currentIndex + 1].age}</ThemedText>
+            <ThemedText>{DUMMY_PROFILES[currentIndex + 1].location}</ThemedText>
+          </ThemedView>
+        </View>
+      )}
+
       <Animated.View
         style={[
           styles.card,
@@ -140,16 +165,6 @@ export function SwipeCard() {
           <ThemedText>{profile.location}</ThemedText>
         </ThemedView>
       </Animated.View>
-
-      {/* Carte suivante (pour l'effet de pile) */}
-      {currentIndex + 1 < DUMMY_PROFILES.length && (
-        <View style={[styles.card, styles.nextCard]}>
-          <Image
-            source={DUMMY_PROFILES[currentIndex + 1].image}
-            style={styles.image}
-          />
-        </View>
-      )}
     </ThemedView>
   );
 }
