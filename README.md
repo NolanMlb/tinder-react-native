@@ -1,50 +1,69 @@
-# Welcome to your Expo app 👋
+# Cahier des charges - Application de rencontres type Tinder
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## 1. Présentation du projet
+### 1.1 Contexte
+L'application a pour objectif de mettre en relation des utilisateurs en fonction de leurs préférences et affinités. Inspirée de Tinder, elle permettra aux utilisateurs de matcher avec d'autres personnes en balayant leur écran vers la droite ou la gauche.
 
-## Get started
+### 1.2 Objectifs
+- Développement d'une application mobile multiplateforme (iOS et Android) en React Native.
+- Interface intuitive et ergonomique.
+- Système de match et de messagerie intégré.
+- Sécurisation des données et protection de la vie privée.
 
-1. Install dependencies
+## 2. Fonctionnalités
 
-   ```bash
-   npm install
-   ```
+### 2.1 Inscription et Authentification
+- Inscription via email, numéro de téléphone ou authentification sociale (Google, Facebook, Apple).
+- Vérification de l'identité (SMS, email, ou reconnaissance faciale).
+- Création et modification de profil avec photos et description.
 
-2. Start the app
+### 2.2 Système de Match
+- Swipe gauche (rejeter) / Swipe droite (aimer).
+- Affichage des profils compatibles en fonction de critères (distance, âge, centres d'intérêt, etc.).
+- Gestion des préférences de recherche.
 
-   ```bash
-    npx expo start
-   ```
+### 2.3 Messagerie
+- Envoi de messages uniquement après un match.
+- Système de notifications pour les nouveaux messages.
+- Envoi de GIFs, images et emojis.
 
-In the output, you'll find options to open the app in a
+### 2.4 Géolocalisation
+- Affichage des profils en fonction de la proximité.
+- Paramétrage de la distance de recherche.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### 2.5 Gestion des Abonnements et Monétisation
+- Version gratuite avec publicités et fonctionnalités limitées.
+- Abonnement premium pour débloquer des fonctionnalités avancées (Rewind, Boost, Super Like, voir qui a liké, etc.).
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### 2.6 Sécurité et Modération
+- Signalement et blocage des utilisateurs.
+- Modération des contenus inappropriés via IA et signalements.
+- Protection des données et conformité RGPD.
 
-## Get a fresh project
+## 3. Technologies utilisées
+- **Frontend :** React Native (Expo ou CLI), TypeScript.
+- **Backend :** Firebase (Auth, Firestore, Storage) ou Node.js avec Express et MongoDB.
+- **Base de données :** Firestore ou MongoDB.
+- **Notifications push :** Firebase Cloud Messaging (FCM).
+- **Géolocalisation :** API Google Maps ou Mapbox.
+- **Authentification sociale :** Firebase Authentication ou OAuth.
+- **Gestion des paiements :** Stripe ou Google Play/App Store Payments.
 
-When you're ready, run:
+## 4. UX/UI
+- Interface moderne et minimaliste.
+- Swipes fluides et animations attractives.
+- Mode clair/sombre.
 
-```bash
-npm run reset-project
-```
+## 5. Déploiement et Maintenance
+- Déploiement sur App Store et Google Play.
+- Mises à jour régulières et correctifs de bugs.
+- Analyse des performances et collecte de feedback utilisateur.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 6. Contraintes et Délais
+- Développement en **6 mois** avec phases de tests intermédiaires.
+- Optimisation pour mobiles de toutes tailles.
+- Compatibilité avec iOS 12+ et Android 8+.
 
-## Learn more
+---
+Ce cahier des charges peut être affiné selon les besoins spécifiques du projet et des parties prenantes.
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
