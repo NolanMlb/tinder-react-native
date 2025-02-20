@@ -1,12 +1,11 @@
 import { StyleSheet } from 'react-native';
 import { ThemedView } from '@/components/ThemedView';
-import { ThemedText } from '@/components/ThemedText';
-import { ProfileInfo } from '@/components/ProfileInfo';
+import { SwipeCard } from '@/components/SwipeCard';
 
-export default function ProfileScreen() {
+export default function MatchScreen() {
   return (
     <ThemedView style={styles.container}>
-      <ProfileInfo />
+      <SwipeCard />
     </ThemedView>
   );
 }
@@ -16,8 +15,4 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
   },
-  title: {
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-}); 
+});

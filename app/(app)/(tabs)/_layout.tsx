@@ -1,17 +1,12 @@
 import { Tabs } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
-import { useThemeColor } from '@/hooks/useThemeColor';
 
 export default function TabLayout() {
-  const tintColor = useThemeColor('tint');
-  const backgroundColor = useThemeColor('background');
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: tintColor,
-        tabBarInactiveTintColor: '#888',
-        tabBarStyle: { backgroundColor },
+        tabBarActiveTintColor: '#FF4B6A',
+        headerShown: false,
       }}>
       <Tabs.Screen
         name="index"
@@ -41,15 +36,6 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="about"
-        options={{
-          title: 'À propos',
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="info-circle" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="settings"
         options={{
           title: 'Paramètres',
@@ -60,4 +46,4 @@ export default function TabLayout() {
       />
     </Tabs>
   );
-}
+} 
