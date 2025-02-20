@@ -15,7 +15,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-function RootLayoutNav() {
+function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, isLoading } = useAuth();
   const segments = useSegments();
   const router = useRouter();
@@ -24,11 +24,12 @@ function RootLayoutNav() {
     if (isLoading) return;
 
     const inAuthGroup = segments[0] === '(auth)';
+    const inPublicGroup = segments[0] === '(public)';
 
-    if (!user && !inAuthGroup) {
-      router.replace('/sign-in');
+    if (!user && !inAuthGroup && !inPublicGroup) {
+      router.replace('/(auth)/sign-in');
     } else if (user && inAuthGroup) {
-      router.replace('/(tabs)');
+      router.replace('/(app)/(tabs)');
     }
   }, [user, segments, isLoading]);
 
@@ -36,7 +37,7 @@ function RootLayoutNav() {
     return null;
   }
 
-  return <Slot />;
+  return <>{children}</>;
 }
 
 const queryClient = new QueryClient();
@@ -61,7 +62,13 @@ export default function RootLayout() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <RootLayoutNav />
+          <ProtectedRoute>
+            <Stack screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="(auth)" />
+              <Stack.Screen name="(app)" />
+              <Stack.Screen name="(public)" />
+            </Stack>
+          </ProtectedRoute>
           <StatusBar style="auto" />
         </ThemeProvider>
       </AuthProvider>
