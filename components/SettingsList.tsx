@@ -1,14 +1,15 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, Switch, useColorScheme } from 'react-native';
+import { StyleSheet, TouchableOpacity, Switch } from 'react-native';
 import { ThemedView } from './ThemedView';
 import { ThemedText } from './ThemedText';
+import { useAuth } from '@/contexts/AuthContext';
 
 type SettingItem = {
   id: string;
   title: string;
   type: 'toggle' | 'button';
   value?: boolean;
-  onPress?: () => void;
+  action?: string;
 };
 
 const settings: SettingItem[] = [
@@ -23,11 +24,6 @@ const settings: SettingItem[] = [
     title: 'Mode Sombre',
     type: 'toggle',
     value: false,
-    onPress: () => {
-      const colorScheme = useColorScheme();
-      const newColorScheme = colorScheme === 'dark' ? 'light' : 'dark';
-      // TODO: Add logic to persist color scheme preference
-    },
   },
   {
     id: '3',
@@ -38,15 +34,24 @@ const settings: SettingItem[] = [
     id: '4',
     title: 'Déconnexion',
     type: 'button',
+    action: 'signOut',
   },
 ];
 
 export function SettingsList() {
+  const { signOut } = useAuth();
+
+  const handlePress = (item: SettingItem) => {
+    if (item.action === 'signOut') {
+      signOut();
+    }
+  };
+
   const renderItem = (item: SettingItem) => (
     <TouchableOpacity
       key={item.id}
       style={styles.settingItem}
-      onPress={item.onPress}
+      onPress={() => handlePress(item)}
     >
       <ThemedText type="defaultSemiBold">{item.title}</ThemedText>
       {item.type === 'toggle' && (
