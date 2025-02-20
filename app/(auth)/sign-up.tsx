@@ -6,23 +6,31 @@ import { TextInput } from '@/components/TextInput';
 import { useAuth } from '@/contexts/AuthContext';
 import { Link } from 'expo-router';
 
-export default function SignInScreen() {
+export default function SignUpScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const { signIn } = useAuth();
 
-  const handleSignIn = async () => {
+  const handleSignUp = async () => {
     try {
+      // TODO: Add sign up logic
       await signIn(email, password);
     } catch (error) {
-      console.error('Error signing in:', error);
+      console.error('Error signing up:', error);
     }
   };
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedText type="title" style={styles.title}>Connexion</ThemedText>
+      <ThemedText type="title" style={styles.title}>Inscription</ThemedText>
       
+      <TextInput
+        placeholder="Nom"
+        value={name}
+        onChangeText={setName}
+      />
+
       <TextInput
         placeholder="Email"
         value={email}
@@ -38,13 +46,13 @@ export default function SignInScreen() {
         secureTextEntry
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleSignIn}>
-        <ThemedText style={styles.buttonText}>Se connecter</ThemedText>
+      <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+        <ThemedText style={styles.buttonText}>S'inscrire</ThemedText>
       </TouchableOpacity>
 
-      <Link href="/(auth)/sign-up" asChild>
+      <Link href="/(auth)/sign-in" asChild>
         <TouchableOpacity>
-          <ThemedText>Pas encore de compte ? S'inscrire</ThemedText>
+          <ThemedText>Déjà un compte ? Se connecter</ThemedText>
         </TouchableOpacity>
       </Link>
     </ThemedView>

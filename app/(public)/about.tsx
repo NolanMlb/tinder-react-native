@@ -1,11 +1,14 @@
 import { StyleSheet } from 'react-native';
 import { ThemedView } from '@/components/ThemedView';
-import { SwipeCard } from '@/components/SwipeCard';
+import { ThemedText } from '@/components/ThemedText';
 
-export default function MatchScreen() {
+export default function AboutScreen() {
   return (
     <ThemedView style={styles.container}>
-      <SwipeCard />
+      <ThemedText type="title" style={styles.title}>À propos</ThemedText>
+      <ThemedText>
+        Cette application est un clone de Tinder créé avec React Native et Expo.
+      </ThemedText>
     </ThemedView>
   );
 }
@@ -19,4 +22,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
   },
-});
+}); 
