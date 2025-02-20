@@ -1,42 +1,16 @@
 import React, { useState, useRef } from 'react';
-import { StyleSheet, Animated, PanResponder, Dimensions, View } from 'react-native';
+import { StyleSheet, Animated, PanResponder, Dimensions, View, ActivityIndicator } from 'react-native';
 import { ThemedView } from './ThemedView';
 import { ThemedText } from './ThemedText';
 import { Image } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { usePokemons } from '@/hooks/usePokemons';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SWIPE_THRESHOLD = 0.25 * SCREEN_WIDTH;
 
-// Données de test
-const DUMMY_PROFILES = [
-  {
-    id: 1,
-    name: 'Elon Musk',
-    age: 55,
-    location: 'San Francisco, US',
-    image: require('../assets/images/elon-chad.jpg'),
-    avatar: require('../assets/images/elon.jpg'),
-  },
-  {
-    id: 2,
-    name: 'Donald Trump',
-    age: 79,
-    location: 'Washington, US',
-    image: require('../assets/images/donald-trump.jpg'),
-    avatar: require('../assets/images/donald-trump-chad.jpg'),
-  },
-  {
-    id: 3,
-    name: 'Shrek Smith',
-    age: 42,
-    location: 'Far Far Away',
-    image: require('../assets/images/shrek-smith.jpg'),
-    avatar: require('../assets/images/shrek-smith.jpg'),
-  }
-];
-
 export function SwipeCard() {
+  const { data: profiles, isLoading, isError } = usePokemons();
   const [currentIndex, setCurrentIndex] = useState(0);
   const position = useRef(new Animated.ValueXY()).current;
   const rotate = position.x.interpolate({
@@ -98,7 +72,23 @@ export function SwipeCard() {
     }).start();
   };
 
-  if (currentIndex >= DUMMY_PROFILES.length) {
+  if (isLoading) {
+    return (
+      <ThemedView style={[styles.container, styles.centerContent]}>
+        <ActivityIndicator size="large" color="#FF4B6A" />
+      </ThemedView>
+    );
+  }
+
+  if (isError) {
+    return (
+      <ThemedView style={[styles.container, styles.centerContent]}>
+        <ThemedText>Une erreur est survenue</ThemedText>
+      </ThemedView>
+    );
+  }
+
+  if (!profiles || currentIndex >= profiles.length) {
     return (
       <ThemedView style={[styles.container, styles.noMoreCards]}>
         <ThemedText type="subtitle">Plus de profils disponibles !</ThemedText>
@@ -106,24 +96,27 @@ export function SwipeCard() {
     );
   }
 
-  const profile = DUMMY_PROFILES[currentIndex];
+  const profile = profiles[currentIndex];
 
   return (
     <ThemedView style={styles.container}>
       {/* Next card (for the pile effect) */}
-      {currentIndex + 1 < DUMMY_PROFILES.length && (
+      {currentIndex + 1 < profiles.length && (
         <View style={[styles.card, styles.nextCard]}>
           <Image
-            source={DUMMY_PROFILES[currentIndex + 1].image}
+            source={{ uri: profiles[currentIndex + 1].image }}
             style={styles.image}
           />
           <ThemedView style={styles.info}>
             <Image
-              source={DUMMY_PROFILES[currentIndex + 1].avatar}
+              source={{ uri: profiles[currentIndex + 1].avatar }}
               style={styles.infoImage}
             />
-            <ThemedText type="subtitle">{DUMMY_PROFILES[currentIndex + 1].name}, {DUMMY_PROFILES[currentIndex + 1].age}</ThemedText>
-            <ThemedText>{DUMMY_PROFILES[currentIndex + 1].location}</ThemedText>
+            <ThemedText type="subtitle">
+              {profiles[currentIndex + 1].name.charAt(0).toUpperCase() + 
+               profiles[currentIndex + 1].name.slice(1)}, {profiles[currentIndex + 1].age}
+            </ThemedText>
+            <ThemedText>{profiles[currentIndex + 1].location}</ThemedText>
           </ThemedView>
         </View>
       )}
@@ -153,15 +146,17 @@ export function SwipeCard() {
         </Animated.View>
 
         <Image
-          source={profile.image}
+          source={{ uri: profile.image }}
           style={styles.image}
         />
         <ThemedView style={styles.info}>
           <Image
-            source={profile.avatar}
+            source={{ uri: profile.avatar }}
             style={styles.infoImage}
           />
-          <ThemedText type="subtitle">{profile.name}, {profile.age}</ThemedText>
+          <ThemedText type="subtitle">
+            {profile.name.charAt(0).toUpperCase() + profile.name.slice(1)}, {profile.age}
+          </ThemedText>
           <ThemedText>{profile.location}</ThemedText>
         </ThemedView>
       </Animated.View>
@@ -220,11 +215,15 @@ const styles = StyleSheet.create({
     left: 40,
   },
   overlayText: {
-    fontSize: 32,
+    fontSize: 25,
     fontWeight: 'bold',
     marginTop: 10,
   },
   noMoreCards: {
     padding: 20,
+  },
+  centerContent: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 }); 
