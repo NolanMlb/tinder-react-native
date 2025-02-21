@@ -63,7 +63,7 @@ export default function RootLayout() {
       <AuthProvider>
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
           <ProtectedRoute>
-            <Stack screenOptions={{ headerShown: false }}>
+            <Stack screenOptions={{ headerShown: true, headerTitle: '' }}>
               <Stack.Screen name="(auth)" />
               <Stack.Screen name="(app)" />
               <Stack.Screen name="(public)" />

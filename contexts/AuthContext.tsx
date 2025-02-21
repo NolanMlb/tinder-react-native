@@ -4,14 +4,15 @@ import { router } from 'expo-router';
 
 type User = {
   id: string;
-  email: string;
+  username: string;
   name: string;
+  token: string;
 };
 
 type AuthContextType = {
   user: User | null;
   isLoading: boolean;
-  signIn: (email: string, password: string) => Promise<void>;
+  signIn: (username: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
 };
 
@@ -38,18 +39,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
-  async function signIn(email: string, password: string) {
+  async function signIn(username: string, password: string) {
     try {
-      // Ici, vous feriez normalement un appel API
-      const mockUser = {
-        id: '1',
-        email: email,
-        name: 'John Doe',
-      };
+      const response = await fetch('https://api-tinder-next.vercel.app/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        })
+      });
 
-      await SecureStore.setItemAsync('user', JSON.stringify(mockUser));
-      setUser(mockUser);
-      router.replace('/(tabs)');
+      const data = await response.json();
+      if (data.success) {
+        const user = {
+          id: '1',
+          username: username,
+          name: 'John Doe',
+          token: data.token
+        };
+        await SecureStore.setItemAsync('user', JSON.stringify(user));
+        setUser(user);
+        router.replace('/(app)/(tabs)');
+      } else {
+        throw new Error('Invalid credentials');
+      }
     } catch (error) {
       console.error('Error signing in:', error);
       throw error;

@@ -7,16 +7,12 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Link } from 'expo-router';
 
 export default function SignInScreen() {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { signIn } = useAuth();
 
   const handleSignIn = async () => {
-    try {
-      await signIn(email, password);
-    } catch (error) {
-      console.error('Error signing in:', error);
-    }
+    await signIn(username, password);
   };
 
   return (
@@ -24,15 +20,14 @@ export default function SignInScreen() {
       <ThemedText type="title" style={styles.title}>Connexion</ThemedText>
       
       <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
+        placeholder="Username (student)"
+        value={username}
+        onChangeText={setUsername}
         autoCapitalize="none"
-        keyboardType="email-address"
       />
 
       <TextInput
-        placeholder="Mot de passe"
+        placeholder="Mot de passe (password123)"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
